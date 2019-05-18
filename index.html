@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Round Robin Algorithm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="src/js/jquery.timespace.js" type="text/javascript"></script>
+    <link href="css/jquery.timespace.light.css" rel="stylesheet">
+    <script src="animate.js" type="text/javascript"></script>
+</head>
+
+<body>
+<h1>Round Robin Algorithm </h1>
+<div class="container-fluid">
+    <div class="row ">
+        <div>
+            <div class="row">
+                <div class="col-5">
+                    <b>Time_Quantum</b>
+                    <input class="form-control" type="number" id="time_quantum" min=1/>
+                </div>
+            </div>
+            <div class="row">
+                <div >
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>Burst Time</th>
+                            <th>Arrival Time</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        <tr id="trow1">
+                            <th scope="row">1</th>
+                            <td><input class="form-control" type="number" id="burst1" min=1/></td>
+                            <td><input class="form-control" type="number" id="arrival1" min=0/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <button type="button" id="addBtn" class="btn btn-dark">Add</button>
+                <button type="button" id="resetBtn" class="btn btn-danger">Reset</button>
+                <button type="button" id="displayBth" class="btn btn-primary">Simulate</button>
+        </div>
+    </div>
+</div>
+<div id="timeline" style="display: none;"></div>
+
+
+</body>
+
+</html>
