@@ -1,16 +1,17 @@
 $(function () {
-    $('#addBtn').on('click',  ()=> {
+    $('#addBtn').on('click', () => {
         $("#tbody").append(addRow());
         elementId++;
     });
-    $("#resetBtn").on('click', () =>{
+    $("#resetBtn").on('click', () => {
         document.location.replace("index.html");
     });
     $("#displayBth").on('click', animate);
 
 });
-
+//Global vars
 let processList: Process[] = [];
+let processListCopy: Process [] = []
 let readyQueue: Process[] = [];
 let currentProcessId = 0;
 let timeQuantum: number;
@@ -25,6 +26,7 @@ function run() {
 
     while (!(readyQueue.length == 0 && processList.length == 0)) {
         if (readyQueue.length != 0) {
+            //one clock tick
             let currentProcess = <Process>(readyQueue.shift());
             let count = 0;
             while (count < timeQuantum && currentProcess.remainingTime > 0) {
@@ -37,13 +39,16 @@ function run() {
 
             }
             if (currentProcess.remainingTime != 0) {
-                //if the process is not completed append to readyQueue
+                //the process is not completed : append to readyQueue
                 readyQueue.push(currentProcess);
             } else {
-                //if process is completed
+                //process is completed
                 let turn_time = (time - currentProcess.arrivalTime);
-                let waiting_time = (turn_time - currentProcess.burstTime);
+                currentProcess.turnAroundTime = turn_time;
                 totalTurnAroundTime += turn_time;
+
+                let waiting_time = (turn_time - currentProcess.burstTime);
+                currentProcess.waitingTime = waiting_time;
                 totalWaitingTime += (waiting_time);
             }
         } else {
@@ -80,68 +85,62 @@ function addRow() {
         '</tr>');
 }
 
+function getData() {
+    timeQuantum = parseInt((<HTMLInputElement>document.getElementById("time_quantum")).value);
+    let number = $("#tbody").children().length;
+    for (let i = 1; i <= number; i++) {
+        let burstTime = parseInt(<string>$("#burst" + i.toString()).val());
+        let arrivalTime = parseInt(<string>$("#arrival" + i.toString()).val());
+        let process = new Process(burstTime, arrivalTime);
+        processList.push(process);
+        processListCopy.push(process);
+    }
+
+
+}
 
 function animate() {
     let animation = $('#timeline');
-    // @ts-ignore
-    // if (animation.has()) {
-    //
-    //     animation.empty();
-    //     currentProcessId = 0;
-    //     time = 0;
-    //     processList = [];
-    //     readyQueue = [];
-    //     done = false;
-    //     totalTurnAroundTime = 0;
-    //     totalWaitingTime = 0;
-    //     numberOfProcess = 0;
-    //
-    // }
+    let dataObj = {
+        events: [
+            {
+                start: 6.50,
+                title: '',
+                description: ' ',
 
-let dataObj =  {
-    events: [
-        {
-            start: 6.50,
-            title: '',
-            description: ' ',
-
-        },
-        {
-            start: 8,
-            end: 10,
-            title: ' ',
-            description: ' '
-        },
-        {
-            start: 14,
-            title: ' ',
-            description: ' '
-        },
-        {
-            start: 14.75,
-            title: ' ',
-            description: ' '
-        },
-    ]
-};
+            },
+            {
+                start: 8,
+                end: 10,
+                title: ' ',
+                description: ' '
+            },
+            {
+                start: 14,
+                title: ' ',
+                description: ' '
+            },
+            {
+                start: 14.75,
+                title: ' ',
+                description: ' '
+            },
+        ]
+    };
     // @ts-ignore
     animation.timespace({
-        data:dataObj
+        data: dataObj
     });
-    timeQuantum = parseInt((<HTMLInputElement>document.getElementById("time_quantum")).value);
-    let c = $("#tbody").children().length;
-    for (let i = 1; i <= c; i++) {
-        let burstTime = parseInt(<string>$("#burst" + i.toString()).val());
-        let arrivalTime = parseInt(<string>$("#arrival" + i.toString()).val());
-        processList.push(new Process(burstTime, arrivalTime));
-    }
+    getData();
     //show time space element
-    (()=>{let element = <HTMLElement>document.getElementById("timeline");
-    let heading = <HTMLElement>document.getElementById("timeLineHeading");
+    (() => {
+        let element = <HTMLElement>document.getElementById("timeline");
+        let heading = <HTMLElement>document.getElementById("timeLineHeading");
         if (element.style.display == 'none') {
             element.style.display = 'block';
             heading.style.display = 'block';
-        }})();
+        }
+    })();
     numberOfProcess = processList.length;
     pListToReadyQueue();
     run();
