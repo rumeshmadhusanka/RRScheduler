@@ -54,6 +54,7 @@ function run() {
             pListToReadyQueue();
         }
     }
+    //simulation done
 }
 function pListToReadyQueue() {
     let i = 0;
