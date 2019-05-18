@@ -23,6 +23,7 @@ let totalWaitingTime = 0;
 
 
 function run() {
+    let lastTableString="";
 
     while (!(readyQueue.length == 0 && processList.length == 0)) {
         if (readyQueue.length != 0) {
@@ -50,6 +51,13 @@ function run() {
                 let waiting_time = (turn_time - currentProcess.burstTime);
                 currentProcess.waitingTime = waiting_time;
                 totalWaitingTime += (waiting_time);
+                let template = `<tr>
+                                     <td>${currentProcess.id}</td>
+                                    <td>${currentProcess.turnAroundTime}</td>
+                                    <td>${currentProcess.waitingTime}</td>
+                                </tr>`;
+                lastTableString+=template;
+                ($("#lastTable")).append(lastTableString);
             }
         } else {
 
@@ -61,7 +69,14 @@ function run() {
     }
 
     //simulation done
-
+    let h = <HTMLElement>document.getElementById("lastTableHeading");
+    let di = <HTMLElement>document.getElementById("lastTableDiv");
+    let da = <HTMLElement>document.getElementById("lastData");
+    (<HTMLElement>document.getElementById("avaTat")).innerHTML= `Average Turn Around Time: ${totalTurnAroundTime/numberOfProcess}`;
+    (<HTMLElement>document.getElementById("avaWait")).innerHTML= `Average Turn Waiting Time: ${totalWaitingTime/numberOfProcess}`;
+    h.style.display = 'block';
+    di.removeAttribute('style');
+    da.removeAttribute('style');
 
 }
 
@@ -80,7 +95,7 @@ function pListToReadyQueue() {
 
 function addRow() {
     return $('<tr id="trow' + elementId + '">' +
-        '<th scope="row">'+'&nbsp;&nbsp;'+ + elementId + '</th>' +
+        '<th scope="row">' + '&nbsp;&nbsp;' + +elementId + '</th>' +
         '<td><input class="form-control" type="number" min=1 id="burst' + elementId + '" />' +
         '</td><td><input class="form-control" type="number" min=0 id="arrival' + elementId + '" />' +
         '</td>' +

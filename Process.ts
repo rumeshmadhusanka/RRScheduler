@@ -4,8 +4,8 @@ class Process {
     public burst_time: number;
     public remaining_time: number;
     public colour: string;
-    private turn_around_time: number;
-    private waiting_time: number;
+    private _turn_around_time: number;
+    private _waiting_time: number;
 
     constructor(burst_time: number, arrival_time: number) {
         this.id = currentProcessId + 1;
@@ -13,8 +13,8 @@ class Process {
         this.burst_time = burst_time;
         this.remaining_time = burst_time;
         this.colour = Process.getRandomColor();
-        this.turn_around_time = 0;
-        this.waiting_time = 0;
+        this._turn_around_time = 0;
+        this._waiting_time = 0;
         currentProcessId += 1;
     }
 
@@ -30,16 +30,24 @@ class Process {
         return this.burst_time;
     }
 
+    get turnAroundTime(): number {
+        return this._turn_around_time;
+    }
+
+    get waitingTime(): number {
+        return this._waiting_time;
+    }
+
     get arrivalTime() {
         return this.arrival_time;
     }
 
     set turnAroundTime(value: number) {
-        this.turn_around_time = value;
+        this._turn_around_time = value;
     }
 
     set waitingTime(value: number) {
-        this.waiting_time = value;
+        this._waiting_time = value;
     }
 
     public static getRandomColor(): string {

@@ -21,6 +21,7 @@ let totalTurnAroundTime = 0;
 let numberOfProcess = 0;
 let totalWaitingTime = 0;
 function run() {
+    let lastTableString = "";
     while (!(readyQueue.length == 0 && processList.length == 0)) {
         if (readyQueue.length != 0) {
             //one clock tick
@@ -46,6 +47,13 @@ function run() {
                 let waiting_time = (turn_time - currentProcess.burstTime);
                 currentProcess.waitingTime = waiting_time;
                 totalWaitingTime += (waiting_time);
+                let template = `<tr>
+                                     <td>${currentProcess.id}</td>
+                                    <td>${currentProcess.turnAroundTime}</td>
+                                    <td>${currentProcess.waitingTime}</td>
+                                </tr>`;
+                lastTableString += template;
+                ($("#lastTable")).append(lastTableString);
             }
         }
         else {
@@ -55,6 +63,14 @@ function run() {
         }
     }
     //simulation done
+    let h = document.getElementById("lastTableHeading");
+    let di = document.getElementById("lastTableDiv");
+    let da = document.getElementById("lastData");
+    document.getElementById("avaTat").innerHTML = `Average Turn Around Time: ${totalTurnAroundTime / numberOfProcess}`;
+    document.getElementById("avaWait").innerHTML = `Average Turn Waiting Time: ${totalWaitingTime / numberOfProcess}`;
+    h.style.display = 'block';
+    di.removeAttribute('style');
+    da.removeAttribute('style');
 }
 function pListToReadyQueue() {
     let i = 0;
