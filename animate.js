@@ -18,39 +18,6 @@ let elementId = 2;
 let totalTurnAroundTime = 0;
 let numberOfProcess = 0;
 let totalWaitingTime = 0;
-class Process {
-    constructor(burst_time, arrival_time) {
-        this.id = currentProcessId + 1;
-        this.arrival_time = arrival_time;
-        this.burst_time = burst_time;
-        this.remaining_time = burst_time;
-        this.colour = Process.getRandomColor();
-        currentProcessId += 1;
-    }
-    get Id() {
-        return this.id;
-    }
-    get remainingTime() {
-        return this.remaining_time;
-    }
-    get burstTime() {
-        return this.burst_time;
-    }
-    get arrivalTime() {
-        return this.arrival_time;
-    }
-    static getRandomColor() {
-        let letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-    tick() {
-        this.remaining_time -= 1;
-    }
-}
 function run() {
     while (!(readyQueue.length == 0 && processList.length == 0)) {
         if (readyQueue.length != 0) {
@@ -59,7 +26,7 @@ function run() {
             while (count < timeQuantum && currentProcess.remainingTime > 0) {
                 currentProcess.tick();
                 $("div.jqTimespaceColumn:nth-child(" + (time + 1) + ")").css("background", currentProcess.colour)
-                    .append("<p>Process " + currentProcess.Id + "</p>");
+                    .append("<br><br><p>&nbsp;&nbsp;&nbsp;PID: " + currentProcess.Id + "</p>");
                 count++;
                 time++;
                 pListToReadyQueue();
@@ -77,7 +44,7 @@ function run() {
             }
         }
         else {
-            $("div.jqTimespaceColumn:nth-child(" + (time + 1) + ")").append("<p>waiting</p>");
+            $("div.jqTimespaceColumn:nth-child(" + (time + 1) + ")").append("<br><br><p>&nbsp;&nbsp;Waiting</p>");
             time++;
             pListToReadyQueue();
         }
@@ -158,8 +125,10 @@ function animate() {
     //show time space element
     (() => {
         let element = document.getElementById("timeline");
+        let heading = document.getElementById("timeLineHeading");
         if (element.style.display == 'none') {
             element.style.display = 'block';
+            heading.style.display = 'block';
         }
     })();
     numberOfProcess = processList.length;
