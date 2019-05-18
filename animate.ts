@@ -80,7 +80,7 @@ function pListToReadyQueue() {
 
 function addRow() {
     return $('<tr id="trow' + elementId + '">' +
-        '<th scope="row">' + elementId + '</th>' +
+        '<th scope="row">'+'&nbsp;&nbsp;'+ + elementId + '</th>' +
         '<td><input class="form-control" type="number" min=1 id="burst' + elementId + '" />' +
         '</td><td><input class="form-control" type="number" min=0 id="arrival' + elementId + '" />' +
         '</td>' +

@@ -15,12 +15,12 @@
 </head>
 
 <body>
-<h1 class="h-100 flex-center font-weight-bold">Round Robin Algorithm </h1>
+<h1 class="h-100 flex-center font-weight-bold" style="background-color: #1a9bcb">Round Robin Algorithm </h1>
 <hr class="hr-bold">
 <div class="flex-center">
     <div class="col-md-1" style="text-align: center">
-    <b>Time Quantum</b>
-    <input class="form-control" type="number" id="time_quantum" min=1 value="4">
+        <b>Time Quantum</b>
+        <input class="form-control" type="number" id="time_quantum" min=1 value="4">
         <hr>
     </div>
 </div>
@@ -30,26 +30,29 @@
         <thead>
         <tr class="font-weight-bold">
             <th>PID</th>
-            <th>Burst Time</th>
-            <th>Arrival Time</th>
+            <th style="text-align: center">Burst Time</th>
+            <th style="text-align: center">Arrival Time</th>
         </tr>
         </thead>
         <tbody id="tbody">
         <tr id="trow1">
-            <th scope="row">1</th>
+            <th scope="row">&nbsp;&nbsp;1</th>
             <td><input class="form-control" type="number" id="burst1" min=1></td>
             <td><input class="form-control" type="number" id="arrival1" min=0></td>
         </tr>
         </tbody>
     </table>
+
 </div>
 <div class="flex-center row">
-<button type="button" id="addBtn" class="btn btn-dark">Add</button>
-<button type="button" id="resetBtn" class="btn btn-danger">Reset</button>
-<button type="button" id="displayBth" class="btn btn-primary">Simulate</button>
+    <button type="button" id="addBtn" class="btn btn-dark">Add</button>
+    <button type="button" id="resetBtn" class="btn btn-danger">Reset</button>
+    <button type="button" id="displayBth" class="btn btn-primary">Simulate</button>
 </div>
-
-<h2 id="timeLineHeading" style="display: none;">Gannet Chart</h2>
+<hr>
+<div class="flex-center">
+    <h2 id="timeLineHeading" style="display: none;">Gannet Chart</h2>
+</div>
 <div id="timeline" style="display: none;"></div>
 
 
