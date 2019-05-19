@@ -42,18 +42,11 @@ function run() {
             else {
                 //process is completed
                 let turn_time = (time - currentProcess.arrivalTime);
-                currentProcess.turnAroundTime = turn_time;
+                currentProcess.turnAroundTime += turn_time;
                 totalTurnAroundTime += turn_time;
                 let waiting_time = (turn_time - currentProcess.burstTime);
-                currentProcess.waitingTime = waiting_time;
+                currentProcess.waitingTime += waiting_time;
                 totalWaitingTime += (waiting_time);
-                let template = `<tr>
-                                     <td>${currentProcess.id}</td>
-                                    <td>${currentProcess.turnAroundTime}</td>
-                                    <td>${currentProcess.waitingTime}</td>
-                                </tr>`;
-                lastTableString += template;
-                ($("#lastTable")).append(lastTableString);
             }
         }
         else {
@@ -63,6 +56,17 @@ function run() {
         }
     }
     //simulation done
+    console.log(processListCopy);
+    for (let i = 0; i < processListCopy.length; i++) {
+        let template = `<tr>
+                                     <td>${processListCopy[i].id}</td>
+                                    <td>${processListCopy[i].turnAroundTime}</td>
+                                    <td>${processListCopy[i].waitingTime}</td>
+                                </tr>`;
+        lastTableString += template;
+    }
+    ($("#lastTable")).append(lastTableString);
+    //display hidden elements
     let h = document.getElementById("lastTableHeading");
     let di = document.getElementById("lastTableDiv");
     let da = document.getElementById("lastData");
